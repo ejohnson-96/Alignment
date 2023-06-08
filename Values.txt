@@ -1,0 +1,23 @@
+Parker Solar Probe
+span_psp[0,:]: source surface longitude [deg]
+span_psp[1,:]: proton density [cm^-3]
+span_psp[2,:]: He/p
+span_psp[3,:]: proton velocity [km/s]
+span_psp[4,:]: proton temp [eV]
+span_psp[5,:]: alfven speed [km/s]
+
+span_psp_he[0,:]: source surface longitude [deg]
+span_psp_he[1,:]: alpha velocity [km/s]
+span_psp_he[2,:]: alpha temp [eV]
+
+Solar Orbiter
+pas_solo[0,:]: source surface longitude [deg]
+pas_solo[1,:]: proton density [cm^-3]
+pas_solo[2,:]: proton velocity  [km/s]
+pas_solo[3,:]: proton temp  [eV]
+pas_solo[4,:]: alfven speed  [km/s]
+
+pas_solo_he[0,:]: source surface longitude [deg]
+pas_solo_he[1,:]: he/p ratio
+pas_solo_he[2,:]: alpha velocity [km/s]
+pas_solo_he[3,:]: alpha temp [eV]
