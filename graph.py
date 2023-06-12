@@ -29,7 +29,7 @@ def plot_hist(
         range,
 ):
     plt.figure(figsize=(10, 10))
-    plt.title(title)
+    plt.title(title, size=32)
     for i, data in enumerate(data_set):
         weg = np.ones_like(data) / float(len(data))
         results, edges = np.histogram(data, range=(0, range), weights=weg, bins=box_n, density=1, )
@@ -39,6 +39,7 @@ def plot_hist(
         plt.plot(xs, ys, label=labels[i], color=color[i], linestyle=style[i], linewidth=2)
     plt.grid()
     plt.xlim(0, range)
+    plt.legend(loc="upper right", fontsize="24")
     #plt.ylim(0, 1)
     plt.show()
     return

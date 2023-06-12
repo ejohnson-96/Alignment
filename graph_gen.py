@@ -4,9 +4,12 @@ from CoAl import theta_ap_0
 import graph as plot
 from plasmapy.particles import Particle
 import scalar_gen as sg
-
+L=1000
 clrs = ["black", "blue", "red"]
 styles = ["-", "--", "-."]
+
+k_B = 1.38 * 10**-23
+mu = 1.67 * 10**-27
 
 boxes = 35
 range_value = 15
@@ -37,8 +40,8 @@ for i in range(L):
     y.append(theta_ap_0(psp_r, solo_r, n_1[i], n_[i], v_1[i], T_1[i], T_2[i] / T_1[i]))
     print('\r', f"{(i / L) * 100:.2f} %", end="")
 
-tle = ""
-lbls = ["", "", ""]
+tle = "Parker Solar Probe (PSP)"
+lbls = [r"$r = 0.0625 \, {\rm au}$", r"$r = 1.0 \, {\rm au}$ - Wind", r"$ r = 0.59 \, {\rm au}$ - SOLO"]
 plot.plot_hist([theta, x, y], labels=lbls, color=clrs, style=styles, title=tle, box_n=boxes, range=range_value)
 
 
@@ -53,16 +56,18 @@ ions = [Particle("p+"), Particle("He-4++")]
 
 theta = []
 x = []
-L = 100 #= len(n_1)
+y = []
+L = len(n_1)
 for i in range(L):
     theta.append(T_2[i]/T_1[i])
     x.append(theta_ap_0(solo_r, 1.0, n_1[i], n_[i], v_1[i], T_1[i], T_2[i]/T_1[i]))
+    y.append(theta_ap_0(solo_r, psp_r, n_1[i], n_[i], v_1[i], T_1[i], T_2[i] / T_1[i]))
     print('\r', f"{(i / L) * 100:.2f} %", end="")
 
-lbls = ["", "", ""]
-plot.plot_hist([theta, x, y], labels=lbls, color=clrs, style=styles, box_n=35, range=15)
+tle = "Solar Orbiter SOLO"
+lbls = [r"$ r = 0.59 \, {\rm au}$", r"$r = 1.0 \, {\rm au}$ - Wind", r"$r = 0.0625 \, {\rm au}$ - PSP" ]
+plot.plot_hist([theta, x, y], labels=lbls, color=clrs, style=styles, title=tle, box_n=boxes, range=range_value)
 
-print(wind.keys())
 
 np_w = wind["P+_DENSITY_cm^{-3}"]
 na_w = wind["HE++_DENSITY_NONLIN_cm^{-3}"]
@@ -81,20 +86,23 @@ va_wind = sg.mag(wind["HE++_VX_GSE_NONLIN_km/s"], wind["HE++_VY_GSE_NONLIN_km/s"
 
 B_wind = sg.mag(wind["BX_nT"], wind["BY_nT"], wind["BZ_nT"])
 
-theta_w = sg.run_loop(wa_wind, wp_wind, sg.theta_gen)
-
 theta = []
 x = []
-L = 10 #= len(n_1)
+y = []
+L = len(n_1)
 for i in range(L):
-    theta.append(T_2[i]/T_1[i])
-    x.append(theta_ap_0(solo_r, 1.0, n_1[i], n_[i], v_1[i], T_1[i], T_2[i]/T_1[i]))
+    theta.append(4*wa_wind[i]**2/wp_wind[i]**2)
+    T_1 = ((mu)*wp_wind[i]**2)/(k_B)
+    print(T_1)
+    x.append(theta_ap_0(1.0, solo_r, n_1[i], n_[i], v_1[i], T_1, theta[i]))
+    y.append(theta_ap_0(1.0, psp_r, n_1[i], n_[i], v_1[i], T_1, theta[i]))
     print('\r', f"{(i / L) * 100:.2f} %", end="")
 
 
 
-theta_w[:] = [x for x in theta_w if x<= 100]
-print(theta_w)
-plot.plot_hist(theta_w, 35, 10)
+#theta_w[:] = [x for x in theta_w if x<= 100]
 
+tle = "Solar Orbiter SOLO"
+lbls = [r"$ r = 0.59 \, {\rm au}$", r"$r = 1.0 \, {\rm au}$ - Wind", r"$r = 0.0625 \, {\rm au}$ - PSP" ]
+plot.plot_hist([theta, x, y], labels=lbls, color=clrs, style=styles, title=tle, box_n=boxes, range=range_value)
 
