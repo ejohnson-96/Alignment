@@ -17,7 +17,7 @@ def theta_ap_0(r_0, r_1, n_p_1, eta_ap, v_p_1, t_p_1, theta_ap_1,
     # Loop.
     for i in range(n_step):
 
-        r = r_1 + ((i + 1) * d_r)
+        r = r_0 + ((i + 1) * d_r)
 
         a = -1.8
         b = -0.2

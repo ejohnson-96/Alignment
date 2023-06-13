@@ -39,3 +39,12 @@ def mag(
     for i in range(len(x)):
         res.append(np.sqrt(x[i]**2 + y[i]**2 + z[i]**2))
     return res
+
+
+def arr_fix(
+        data,
+):
+    res = []
+    for i in range(len(data)):
+        res.append(data[i][0])
+    return res

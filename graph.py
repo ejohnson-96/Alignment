@@ -40,6 +40,6 @@ def plot_hist(
     plt.grid()
     plt.xlim(0, range)
     plt.legend(loc="upper right", fontsize="24")
-    #plt.ylim(0, 1)
+    #fplt.ylim(0, 0.21)
     plt.show()
     return
